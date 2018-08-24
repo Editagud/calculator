@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import { WindowHelper } from '../components/helpers'
+import { makeTranslations } from 'mini-trans'
 
 const styles = {
   input: {
@@ -31,25 +32,27 @@ const styles = {
   },
 }
 
-let translations = {
+const translations = {
   da: {
     'Know the value of': 'Kend værdien af',
     'Know how much you can earn with us lorem ipsums some more text because we are awesome something about the calculator':
-      'Find ud af, hvor meget du kan tjene hos os lorem ipsums lidt mere tekst, fordi vi er vidunderlige om kalkulator',
-    "I'd sell": 'Jeg ville sælge',
+      'Ticketbutler tilbyder et billetsystem til de mest konkurrencedygtige priser. Udregn her din omsætning og omkostninger samt forventede antal nye tilmeldte til dit nyhedsbrev og ekstra visninger af din identitet. ',
+    "I'd sell": 'Jeg sælge',
     ' tickets sold': ' billetter solgt',
     tickets: 'billetter',
     at: 'til',
     ' tickets price': ' billetpris',
-    each: 'hver',
-    'Exclude ticket fee': 'Ekskluder billetgebyr',
-    'Include ticket fee': 'Inkluder billetgebyr',
-    'Your estimated revenue': 'Dine forventede indtægter',
-    Summary: 'Resume',
+    each: 'per styk',
+    'Exclude ticket fee': 'Billetkøber betaler billetgebyr',
+    'Include ticket fee': 'Arrangør betaler billetgebyr',
+    'Your estimated revenue': 'Dine forventede omsætning',
+    Summary: 'Oversigt',
     'Ticket fee per ticket': 'Billetgebyr per billet',
-    'Subscription fee per month': 'Bidrag  per måned',
-    'Expected newsletter signups': 'Forventede nyhedsbrev registreringer',
-    'Expected extra brand impressions': 'Forventet ekstra brandindtryk',
+    'Subscription fee per month': 'Abbonementsgebyr per måned',
+    'Expected newsletter signups': 'Forventet antal nye nyhedsbrevsmodtagere',
+    'Expected extra brand impressions':
+      'Forventet antal ekstra brand-visninger',
+    'All prices without VAT': 'Alle priser viser uden moms',
   },
 }
 
@@ -67,8 +70,8 @@ class Calculator extends React.Component {
       hasInteracted: false,
     }
   }
-  fixedTicketFee = 3.75
-  percentTicketFee = 0.0375
+  fixedTicketFee = 3
+  percentTicketFee = 0.03
 
   t = makeTranslations(translations, this.props.locale)
 
@@ -158,7 +161,7 @@ class Calculator extends React.Component {
                   lineHeight: '70px',
                 }}
               >
-                {t('Know the value of')} <br />Ticketbutler
+                {this.t('Know the value of')} <br />Ticketbutler
               </h1>
               <h2
                 style={{
@@ -180,7 +183,7 @@ class Calculator extends React.Component {
                     : {}),
                 }}
               >
-                {t(
+                {this.t(
                   'Know how much you can earn with us lorem ispums some more text because we are awesome something about the calculator'
                 )}
               </h2>
@@ -210,29 +213,29 @@ class Calculator extends React.Component {
                     marginBottom: '1em',
                   }}
                 >
-                  <h3 style={styles.h3}> {t("I'd sell")} </h3>
+                  <h3 style={styles.h3}> {this.t("I'd sell")} </h3>
                   <input
                     style={styles.input}
                     type="number"
-                    placeholder={t(' tickets sold')}
+                    placeholder={this.t(' tickets sold')}
                     required
                     value={this.state.numberOfTickets}
                     onChange={this.handleNumberOfTicketsInput}
                   />
                   <h3 style={styles.h3}>
-                    <span style={{ color: 'black' }}>{t('tickets')}</span>{' '}
-                    {t('at')}
+                    <span style={{ color: 'black' }}>{this.t('tickets')}</span>{' '}
+                    {this.t('at')}
                   </h3>
                   <input
                     style={styles.input}
                     type="number"
-                    placeholder={t(' tickets price')}
+                    placeholder={this.t(' tickets price')}
                     required
                     value={this.state.price}
                     onChange={this.handlePriceInput}
                   />
                   <h3 style={styles.h3}>
-                    <span style={{ color: 'black' }}> kr</span> {t('each')}
+                    <span style={{ color: 'black' }}> kr</span> {this.t('each')}
                   </h3>
                 </label>
 
@@ -248,7 +251,7 @@ class Calculator extends React.Component {
                       this.state.includeTicketFee ? {} : { color: '#326DE9' }
                     }
                   >
-                    {t('Exclude ticket fee')}
+                    {this.t('Exclude ticket fee')}
                   </span>
                   <label
                     className="switch"
@@ -303,10 +306,10 @@ class Calculator extends React.Component {
                       this.state.includeTicketFee ? { color: '#326DE9' } : {}
                     }
                   >
-                    {t('Include ticket fee')}
+                    {this.t('Include ticket fee')}
                   </span>
                 </div>
-                <p style={styles.small}>{t('Your estimated revenue')} </p>
+                <p style={styles.small}>{this.t('Your estimated revenue')} </p>
                 <p
                   style={{
                     color: '#326DE9',
@@ -330,7 +333,7 @@ class Calculator extends React.Component {
                   }}
                 />
 
-                <p style={styles.small}>{t('Summary')}</p>
+                <p style={styles.small}>{this.t('Summary')}</p>
                 <div
                   style={{
                     height: '250px',
@@ -353,7 +356,7 @@ class Calculator extends React.Component {
                 >
                   {[
                     {
-                      label: t('Ticket fee per ticket'),
+                      label: this.t('Ticket fee per ticket'),
                       value:
                         isZeroOrNull(this.state.price) ||
                         isZeroOrNull(this.state.numberOfTickets)
@@ -361,7 +364,7 @@ class Calculator extends React.Component {
                           : localFee + ' kr',
                     },
                     {
-                      label: t('Subscription fee per month'),
+                      label: this.t('Subscription fee per month'),
                       value:
                         this.state.numberOfTickets > 100 &&
                         this.state.price == 0
@@ -370,11 +373,11 @@ class Calculator extends React.Component {
                     },
 
                     {
-                      label: t('Expected newsletter signups'),
+                      label: this.t('Expected newsletter signups'),
                       value: subscriptions,
                     },
                     {
-                      label: t('Expected extra brand impressions'),
+                      label: this.t('Expected extra brand impressions'),
                       value: impressions,
                     },
                   ].map(({ label, value }) => (
@@ -415,7 +418,15 @@ class Calculator extends React.Component {
                     </div>
                   ))}
                 </div>
-
+                <p
+                  style={{
+                    color: 'grey',
+                    fontSize: 14,
+                    margin: '1em',
+                  }}
+                >
+                  {this.t('All prices without VAT')}
+                </p>
                 <style jsx>{`
                   html {
                     font-family: 'Montserrat', serif;
