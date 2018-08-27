@@ -6,7 +6,7 @@ import { makeTranslations } from 'mini-trans'
 const styles = {
   input: {
     height: '2em',
-    width: '7.5em',
+    width: '7.6em',
     border: '1px solid #C0C5CF',
     borderRadius: 2,
     backgroundColor: '#FFFFFF',
@@ -36,23 +36,23 @@ const translations = {
   da: {
     'Know the value of': 'Kend værdien af',
     'Know how much you can earn with us lorem ipsums some more text because we are awesome something about the calculator':
-      'Ticketbutler tilbyder et billetsystem til de mest konkurrencedygtige priser. Udregn her din omsætning og omkostninger samt forventede antal nye tilmeldte til dit nyhedsbrev og ekstra visninger af din identitet. ',
-    "I'd sell": 'Jeg sælge',
+      'Ticketbutler tilbyder et billetsystem til de mest konkurrencedygtige priser. Udregn her din omsætning og omkostninger samt forventede antal nye tilmeldte til dit nyhedsbrev og ekstra visninger af din identitet.',
+    "I'd sell": 'Jeg sælger',
     ' tickets sold': ' billetter solgt',
     tickets: 'billetter',
     at: 'til',
     ' tickets price': ' billetpris',
     each: 'per styk',
-    'Exclude ticket fee': 'Billetkøber betaler billetgebyr',
-    'Include ticket fee': 'Arrangør betaler billetgebyr',
-    'Your estimated revenue': 'Dine forventede omsætning',
+    'Ticket purchaser pays ticket fee': 'Billetkøber betaler billetgebyr',
+    'Event organizer pays ticket fee': 'Arrangør betaler billetgebyr',
+    'Your estimated revenue': 'Din forventede udbetaling',
     Summary: 'Oversigt',
     'Ticket fee per ticket': 'Billetgebyr per billet',
     'Subscription fee per month': 'Abbonementsgebyr per måned',
     'Expected newsletter signups': 'Forventet antal nye nyhedsbrevsmodtagere',
     'Expected extra brand impressions':
       'Forventet antal ekstra brand-visninger',
-    'All prices without VAT': 'Alle priser viser uden moms',
+    'Prices above include VAT': 'Ovenstående priser vises inklusiv moms',
   },
 }
 
@@ -70,8 +70,8 @@ class Calculator extends React.Component {
       hasInteracted: false,
     }
   }
-  fixedTicketFee = 3
-  percentTicketFee = 0.03
+  fixedTicketFee = 3.75
+  percentTicketFee = 0.0375
 
   t = makeTranslations(translations, this.props.locale)
 
@@ -173,7 +173,7 @@ class Calculator extends React.Component {
                   margin: '0 auto',
                   lineHeight: '38px',
                   letterSpacing: '-0.19px',
-                  width: '650px',
+                  width: '700px',
                   paddingBottom: '5em',
                   ...(window.width < 800
                     ? {
@@ -184,22 +184,22 @@ class Calculator extends React.Component {
                 }}
               >
                 {this.t(
-                  'Know how much you can earn with us lorem ispums some more text because we are awesome something about the calculator'
+                  'Know how much you can earn with us lorem ipsums some more text because we are awesome something about the calculator'
                 )}
               </h2>
               <div
                 className="form"
                 style={{
-                  height: '770px',
+                  height: '810px',
                   width: '100%',
-                  maxWidth: '811px',
+                  maxWidth: '815px',
                   borderRadius: 5,
                   backgroundColor: '#F5F8FB',
                   boxShadow: '2px 2px 30px 0 #848EA2',
                   margin: '0 auto',
                   textAlign: 'center',
                   padding: '4em',
-                  ...(window.width < 600
+                  ...(window.width < 650
                     ? {
                         padding: '1em',
                         height: '1000px',
@@ -251,7 +251,7 @@ class Calculator extends React.Component {
                       this.state.includeTicketFee ? {} : { color: '#326DE9' }
                     }
                   >
-                    {this.t('Exclude ticket fee')}
+                    {this.t('Ticket purchaser pays ticket fee')}
                   </span>
                   <label
                     className="switch"
@@ -306,7 +306,7 @@ class Calculator extends React.Component {
                       this.state.includeTicketFee ? { color: '#326DE9' } : {}
                     }
                   >
-                    {this.t('Include ticket fee')}
+                    {this.t('Event organizer pays ticket fee')}
                   </span>
                 </div>
                 <p style={styles.small}>{this.t('Your estimated revenue')} </p>
@@ -421,11 +421,11 @@ class Calculator extends React.Component {
                 <p
                   style={{
                     color: 'grey',
-                    fontSize: 14,
+                    fontSize: '1em',
                     margin: '1em',
                   }}
                 >
-                  {this.t('All prices without VAT')}
+                  {this.t('Prices above include VAT')}
                 </p>
                 <style jsx>{`
                   html {
